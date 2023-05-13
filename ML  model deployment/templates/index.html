@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>ML API</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+  
+</head>
+
+<body>
+ <div class="login">
+	<h1>Flight Fare Prediction</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}"method="post">
+        <input type="number" name="distance" placeholder="distance" required="required" />
+		<input type="number" name="source" placeholder="source" required="required" />
+		<input type="number" name="destination" placeholder="destination" required="required" />
+        <input type="number" name="passengers" placeholder="total number of passengers in plane" required="required" />
+        <input type="text" name="carrier_lg" placeholder="carrier with largest market share" required="required" />
+        <input type="text" name="ms_lg" placeholder="largest market share" required="required" />
+        <input type="text" name="carrier_low" placeholder="carrier with lowest market share" required="required" />
+        <input type="text" name="ms_low" placeholder="lowest market share" required="required" />
+
+
+        <input type="number" name="lat1" placeholder="latitute of source" required="required" />
+		<input type="number" name="long1" placeholder="longitude of source" required="required" />
+		<input type="number" name="lat2" placeholder="latitute of destination" required="required" />
+		<input type="number" name="long2" placeholder="longitude of destination" required="required" />
+
+
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+
+   <br>
+   <br>
+   {{ prediction_text }}
+
+ </div>
+
+<div>'Albany, NY': 30257,
+<br>
+ 'Albuquerque, NM': 30140,
+ <br>
+ 'Allentown/Bethlehem/Easton, PA': 30135,
+ <br>
+ 'Amarillo, TX': 30279,
+ <br>
+ 'Appleton, WI': 30408,
+ <br>
+ 'Asheville, NC': 30431,
+ <br>
+ 'Ashland, WV': 32223,
+ <br>
+ 'Aspen, CO': 30372,
+ <br>
+ 'Atlanta, GA (Metropolitan Area)': 30397,
+ <br>
+ 'Atlantic City, NJ': 30158,
+ <br>
+ 'Austin, TX': 30423,
+ <br>
+ 'Bangor, ME': 30581,
+ <br>
+ 'Baton Rouge, LA': 30781,
+ <br>
+ 'Belleville, IL': 30676,
+ <br>
+ 'Bellingham, WA': 30666,
+ <br>
+ 'Bend/Redmond, OR': 34489,
+ <br>
+ 'Billings, MT': 30620,
+ <br>
+ 'Birmingham, AL': 30599,
+ <br>
+ 'Bismarck/Mandan, ND': 30627,
+ <br>
+ 'Bloomington/Normal, IL': 30685,
+ <br>
+ 'Boise, ID': 30713,
+ <br>
+ 'Boston, MA (Metropolitan Area)': 30721,
+ <br>
+ 'Bozeman, MT': 30849,
+ <br>
+ 'Buffalo, NY': 30792,
+ <br>
+ 'Bullhead City, AZ': 30590,
+ <br>
+ 'Burlington, VT': 30785,
+ <br>
+ 'Cedar Rapids/Iowa City, IA': 31003,
+ <br>
+ 'Charleston, SC': 30994,
+ <br>
+ 'Charlotte, NC': 31057,
+ <br>
+ 'Charlottesville, VA': 30990,
+ <br>
+ 'Chattanooga, TN': 30980,
+ <br>
+ 'Chicago, IL': 30977,
+ <br>
+ 'Cincinnati, OH': 33105,
+ <br>
+ 'Cleveland, OH (Metropolitan Area)': 30647,
+ <br>
+ 'Colorado Springs, CO': 30189,
+ <br>
+ 'Columbia, SC': 30868,
+ <br>
+ 'Columbus, OH': 31066,
+ <br>
+ 'Concord, NC': 32544,
+ <br>
+ 'Corpus Christi, TX': 31140,
+ <br>
+ 'Dallas/Fort Worth, TX': 30194,
+ <br>
+ 'Dayton, OH': 31267,
+ <br>
+ 'Daytona Beach, FL': 31252,
+ <br>
+ 'Denver, CO': 30325,
+ <br>
+ 'Des Moines, IA': 31423,
+ <br>
+ 'Detroit, MI': 31295,
+ <br>
+ 'Durango, CO': 30285,
+ <br>
+ 'Eagle, CO': 31503,
+ <br>
+ 'El Paso, TX': 30615,
+ <br>
+ 'Eugene, OR': 31603,
+ <br>
+ 'Eureka/Arcata, CA': 30157,
+ <br>
+ 'Everett, WA': 34004,
+ <br>
+ 'Fargo, ND': 31637,
+ <br>
+ 'Farmington, NM': 31711,
+ <br>
+ 'Fayetteville, AR': 31834,
+ <br>
+ 'Flint, MI': 31721,
+ <br>
+ 'Fort Collins/Loveland, CO': 31719,
+ <br>
+ 'Fort Myers, FL': 31714,
+ <br>
+ 'Fort Wayne, IN': 31823,
+ <br>
+ 'Fresno, CA': 31638,
+ <br>
+ 'Grand Forks, ND': 31898,
+ <br>
+ 'Grand Rapids, MI': 31986,
+ <br>
+ 'Great Falls, MT': 31895,
+ <br>
+ 'Green Bay, WI': 31977,
+ <br>
+ 'Greensboro/High Point, NC': 31995,
+ <br>
+ 'Greenville/Spartanburg, SC': 31871,
+ <br>
+ 'Gulfport/Biloxi, MS': 31973,
+ <br>
+ 'Harlingen/San Benito, TX': 32206,
+ <br>
+ 'Harrisburg, PA': 32070,
+ <br>
+ 'Hartford, CT': 30529,
+ <br>
+ 'Hilton Head, SC': 32124,
+ <br>
+ 'Houston, TX': 31453,
+ <br>
+ 'Huntsville, AL': 30255,
+ <br>
+ 'Idaho Falls, ID': 32280,
+ <br>
+ 'Indianapolis, IN': 32337,
+ <br>
+ 'Jackson, WY': 32441,
+ <br>
+ 'Jackson/Vicksburg, MS': 32448,
+ <br>
+ 'Jacksonville, FL': 31136,
+ <br>
+ 'Kalispell, MT': 31648,
+ <br>
+ 'Kansas City, MO': 33198,
+ <br>
+ 'Key West, FL': 31624,
+ <br>
+ 'Knoxville, TN': 35412,
+ <br>
+ 'Lansing, MI': 32884,
+ <br>
+ 'Laredo, TX': 33038,
+ <br>
+ 'Las Vegas, NV': 32211,
+ <br>
+ 'Latrobe, PA': 32898,
+ <br>
+ 'Lexington, KY': 32945,
+ <br>
+ 'Lincoln, NE': 33029,
+ <br>
+ 'Little Rock, AR': 32600,
+ <br>
+ 'Los Angeles, CA (Metropolitan Area)': 32575,
+ <br>
+ 'Louisville, KY': 33044,
+ <br>
+ 'Lubbock, TX': 32896,
+ <br>
+ 'Madison, WI': 33485,
+ <br>
+ "Martha's Vineyard, MA": 33541,
+ <br>
+ 'Medford, OR': 33264,
+ <br>
+ 'Melbourne, FL': 33360,
+ <br>
+ 'Memphis, TN': 33244,
+ <br>
+ 'Miami, FL (Metropolitan Area)': 32467,
+ <br>
+ 'Midland/Odessa, TX': 33158,
+ <br>
+ 'Milwaukee, WI': 33342,
+ <br>
+ 'Minneapolis/St. Paul, MN': 31650,
+ <br>
+ 'Minot, ND': 33304,
+ <br>
+ 'Mission/McAllen/Edinburg, TX': 33256,
+ <br>
+ 'Missoula, MT': 33486,
+ <br>
+ 'Mobile, AL': 30562,
+ <br>
+ 'Montrose/Delta, CO': 33502,
+ <br>
+ 'Myrtle Beach, SC': 31135,
+ <br>
+ 'Nantucket, MA': 30154,
+ <br>
+ 'Nashville, TN': 30693,
+ <br>
+ 'New Haven, CT': 32244,
+ <br>
+ 'New Orleans, LA': 33495,
+ <br>
+ 'New York City, NY (Metropolitan Area)': 31703,
+ <br>
+ 'Niagara Falls, NY': 32265,
+ <br>
+ 'Norfolk, VA (Metropolitan Area)': 33667,
+ <br>
+ 'Oklahoma City, OK': 33851,
+ <br>
+ 'Omaha, NE': 33316,
+ <br>
+ 'Orlando, FL': 31454,
+ <br>
+ 'Palm Springs, CA': 34262,
+ <br>
+ 'Panama City, FL': 31481,
+ <br>
+ 'Pasco/Kennewick/Richland, WA': 34252,
+ <br>
+ 'Paso Robles/San Luis Obispo, CA': 34236,
+ <br>
+ 'Pensacola, FL': 33728,
+ <br>
+ 'Peoria, IL': 34108,
+ <br>
+ 'Philadelphia, PA': 34100,
+ <br>
+ 'Phoenix, AZ': 30466,
+ <br>
+ 'Pittsburgh, PA': 30198,
+ <br>
+ 'Plattsburgh, NY': 34025,
+ <br>
+ 'Portland, ME': 34321,
+ <br>
+ 'Portland, OR': 34057,
+ <br>
+ 'Portsmouth, NH': 34259,
+ <br>
+ 'Provo, UT': 34314,
+ <br>
+ 'Punta Gorda, FL': 34082,
+ <br>
+ 'Quad Cities, IL (Metropolitan Area)': 33367,
+ <br>
+ 'Raleigh/Durham, NC': 34492,
+ <br>
+ 'Rapid City, SD': 34457,
+ <br>
+ 'Reno, NV': 34570,
+ <br>
+ 'Richmond, VA': 34524,
+ <br>
+ 'Roanoke, VA': 34574,
+ <br>
+ 'Rochester, NY': 34576,
+ <br>
+ 'Rockford, IL': 34512,
+ <br>
+ 'Sacramento, CA': 33192,
+ <br>
+ 'Saginaw/Bay City/Midland, MI': 33184,
+ <br>
+ 'Salinas/Monterey, CA': 34922,
+ <br>
+ 'Salt Lake City, UT': 34614,
+ <br>
+ 'San Antonio, TX': 33214,
+ <br>
+ 'San Diego, CA': 33570,
+ <br>
+ 'San Francisco, CA (Metropolitan Area)': 32457,
+ <br>
+ 'Sanford, FL': 34761,
+ <br>
+ 'Santa Barbara, CA': 34689,
+ <br>
+ 'Santa Rosa, CA': 34433,
+ <br>
+ 'Sarasota/Bradenton, FL': 34986,
+ <br>
+ 'Savannah, GA': 34685,
+ <br>
+ 'Seattle, WA': 30559,
+ <br>
+ 'Shreveport, LA': 30476,
+ <br>
+ 'Sioux Falls, SD': 31775,
+ <br>
+ 'South Bend, IN': 34696,
+ <br>
+ 'Spokane, WA': 31884,
+ <br>
+ 'Springfield, IL': 34952,
+ <br>
+ 'Springfield, MO': 34783,
+ <br>
+ 'St. Cloud, MN': 32556,
+ <br>
+ 'St. Louis, MO': 31123,
+ <br>
+ 'Steamboat Springs, CO': 34699,
+ <br>
+ 'Stockton, CA': 34716,
+ <br>
+ 'Syracuse, NY': 35096,
+ <br>
+ 'Tallahassee, FL': 35249,
+ <br>
+ 'Tampa, FL (Metropolitan Area)': 33195,
+ <br>
+ 'Toledo, OH': 35165,
+ <br>
+ 'Traverse City, MI': 35380,
+ <br>
+ 'Trenton, NJ': 35356,
+ <br>
+ 'Tucson, AZ': 30436,
+ <br>
+ 'Tulsa, OK': 34653,
+ <br>
+ 'Valparaiso, FL': 31504,
+ <br>
+ 'Washington, DC (Metropolitan Area)': 30852,
+ <br>
+ 'West Palm Beach/Palm Beach, FL': 34027,
+ <br>
+ 'Wichita, KS': 30928,
+ <br>
+ 'Wilmington, DE': 32320,
+ <br>
+ 'Wilmington, NC': 32323
+ <br>
+</div>
+
+
+</body>
+</html>
